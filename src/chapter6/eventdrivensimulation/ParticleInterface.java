@@ -1,4 +1,4 @@
-package chapter6;
+package chapter6.eventdrivensimulation;
 
 /**
  * Created by Rene Argento on 28/04/18.

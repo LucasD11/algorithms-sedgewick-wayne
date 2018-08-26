@@ -1,4 +1,4 @@
-package chapter6;
+package chapter6.eventdrivensimulation;
 
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdRandom;
@@ -7,14 +7,14 @@ import edu.princeton.cs.algs4.StdRandom;
  * Created by Rene Argento on 27/04/18.
  */
 public class Particle implements ParticleInterface {
-    private double positionX;
-    private double positionY;
+    double positionX;
+    double positionY;
 
-    private double velocityX;
-    private double velocityY;
+    double velocityX;
+    double velocityY;
 
-    private double radius;
-    private double mass;
+    double radius;
+    double mass;
 
     private int numberOfCollisions;
 
@@ -80,7 +80,7 @@ public class Particle implements ParticleInterface {
 
         // Check if particles overlap
         if (deltaPositionSquared < distanceBetweenCentersSquared) {
-            throw new RuntimeException("Invalid state: overlapping particles. No two objects can occupy the same space " +
+            throw new IllegalStateException("Invalid state: overlapping particles. No two objects can occupy the same space " +
                     "at the same time.");
         }
 
@@ -170,4 +170,29 @@ public class Particle implements ParticleInterface {
     public double kineticEnergy() {
         return 0.5 * mass * (velocityX * velocityX + velocityY * velocityY);
     }
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public double getPositionY() {
+        return positionY;
+    }
+
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public double getVelocityY() {
+        return velocityY;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
 }

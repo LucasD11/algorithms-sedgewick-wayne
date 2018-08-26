@@ -1,4 +1,4 @@
-package chapter6;
+package chapter6.eventdrivensimulation;
 
 import chapter2.section4.PriorityQueueResize;
 import edu.princeton.cs.algs4.StdDraw;
@@ -8,11 +8,11 @@ import edu.princeton.cs.algs4.StdDraw;
  */
 public class CollisionSystem {
 
-    private class Event implements Comparable<Event> {
+    protected class Event implements Comparable<Event> {
 
-        private final double time;
-        private final ParticleInterface particleA;
-        private final ParticleInterface particleB;
+        protected final double time;
+        protected final ParticleInterface particleA;
+        protected final ParticleInterface particleB;
         private final int collisionsCountA;
         private final int collisionsCountB;
 
@@ -57,15 +57,16 @@ public class CollisionSystem {
         }
     }
 
-    private PriorityQueueResize<Event> priorityQueue;
-    private double time;
-    private ParticleInterface[] particles;
+    protected PriorityQueueResize<Event> priorityQueue;
+    protected double time;
+    protected ParticleInterface[] particles;
 
     public CollisionSystem(ParticleInterface[] particles) {
+        StdDraw.enableDoubleBuffering();
         this.particles = particles;
     }
 
-    private void predictCollisions(ParticleInterface particle, double limit) {
+    protected void predictCollisions(ParticleInterface particle, double limit) {
         if (particle == null) {
             return;
         }
@@ -96,7 +97,8 @@ public class CollisionSystem {
             particles[i].draw();
         }
 
-        StdDraw.show(20);
+        StdDraw.pause(20);
+        StdDraw.show();
 
         if (time < limit) {
             priorityQueue.insert(new Event(time + 1.0 / hertz, null, null));
@@ -144,8 +146,6 @@ public class CollisionSystem {
     }
 
     public static void main(String[] args) {
-        StdDraw.enableDoubleBuffering();
-
         int numberOfParticles = Integer.parseInt(args[0]);
         Particle[] particles = new Particle[numberOfParticles];
 
