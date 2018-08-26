@@ -34,7 +34,7 @@ def insertion_sort_sentinel(a):
             j -= 1
 
 
-def smock_test_sort(sort):
+def smoke_test_sort(sort):
     a = [random.randint(0, 10000) for _ in range(1000)]
     sort(a)
     assert sorted(a) == a
@@ -69,6 +69,6 @@ def sort_compare(sort1, sort2, array_length, counts):
 
 
 if __name__ == '__main__':
-    smock_test_sort(insertion_sort)
-    smock_test_sort(insertion_sort_sentinel)
+    smoke_test_sort(insertion_sort)
+    smoke_test_sort(insertion_sort_sentinel)
     sort_compare(insertion_sort, insertion_sort_sentinel, 1000, 100)
