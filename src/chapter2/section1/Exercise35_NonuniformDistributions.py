@@ -2,10 +2,10 @@
 # coding=utf-8
 #
 # Author: Lucas (yuanzhendai@gmail.com)
-# Date: 2018-09-01 19:59:36
+# Date: 2018-09-02 15:28:53
 """
-Distributions
--------------
+Nonuniform Distributions
+------------------------
 """
 
 import argparse
@@ -13,6 +13,19 @@ import time
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+
+def generate_testcase(length, distribution):
+    if distribution == 'gaussian':
+        return np.random.normal(size=length)
+    elif distribution == 'poisson':
+        return np.random.poisson(size=length)
+    elif distribution == 'geometric':
+        return np.random.geometric(p=0.1, size=length)
+    elif distribution == 'discrete':
+        return np.random.randint(0, 1, size=length)
+    else:
+        raise Exception("Unknown distribution %s" % distribution)
 
 
 def selection_sort(a):
@@ -59,10 +72,10 @@ class StopWatch:
         return time.time() - self.start
 
 
-def evalute_time_cost(sort, array_length, times):
+def evalute_time_cost(sort, array_length, times, distribution):
     total_time = 0.0
     for _ in range(times):
-        a = np.random.random(array_length)
+        a = generate_testcase(array_length, distribution)
         watch = StopWatch()
         sort(a)
         total_time += watch.stop()
@@ -86,6 +99,11 @@ def main():
         "algorithm",
         type=str,
         choices=["insertion", "selection", "shellsort"],
+    )
+    parser.add_argument(
+        "distribution",
+        type=str,
+        choices=['gaussian', 'poisson', 'geometric', 'discrete']
     )
     parser.add_argument(
         "-s",
@@ -132,7 +150,7 @@ def main():
     # Run sort algorithm
     total_time = []
     for length in array_length:
-        total_time.append(evalute_time_cost(sort, length, args.times))
+        total_time.append(evalute_time_cost(sort, length, args.times, args.distribution))
 
     # Draw graph
     plot_time_graph(array_length, total_time)
